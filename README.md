@@ -31,7 +31,12 @@ void already_has_char_star(const char *s) {
 
 The solution is a `string_view`. `string_view` has implicit conversion constructors from both `const char *` and `const std::string &`, and since `string_view` doesn’t copy, there is no `O(n)` memory penalty for making a hidden copy. In the case where a `const std::string &` is passed, the constructor runs in `O(1)` time. In the case where a `const char *` is passed, the constructor will calculate the length for you (or you can use the two-parameter `string_view` constructor which takes in the length of the string).
 
-# what this is about
+# About the project
+A `filtered_string_view` is like a `string_view`, however it presents a filtered view of the underlying data. This means that readers of the `filtered_string_view` may only see part of the underlying data.
+The filter is optionally provided by the caller as a predicate (a function which returns a boolean) which returns `true` if the data is to be kept. If not provided, the filter will default to the "true" predicate, i.e., a function which always returns true. In this case, no data would be filtered.
+
+The iterator is also provided to traverse through the `filtered_string_view` which will be a bidirectional `const_iterator` (as a `string_view` provides a read only view into its underlying data).
+
 
 # what concepts applied
 
